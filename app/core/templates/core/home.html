@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+
+{% block content %}
+<div class="row mt-5">
+    <div class="col-md-8 mx-auto text-center">
+        <h1 class="display-4 mb-4">Agricultural Product Prediction</h1>
+        <p class="lead">Predict crop production, yield, and price based on various agricultural factors</p>
+        <p class="lead">Olaniyan Damilare Ridwan <br> 21/SCI01/054</p>
+        
+        {% if not user.is_authenticated %}
+        <div class="mt-5">
+            <a href="{% url 'signup' %}" class="btn btn-success btn-lg me-3">Sign Up</a>
+            <a href="{% url 'login' %}" class="btn btn-outline-success btn-lg">Login</a>
+        </div>
+        {% else %}
+        <div class="mt-5">
+            <a href="{% url 'predict' %}" class="btn btn-success btn-lg me-3">New Prediction</a>
+            <a href="{% url 'dashboard' %}" class="btn btn-outline-success btn-lg">View Dashboard</a>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row mt-5">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Production Prediction</h5>
+            </div>
+            <div class="card-body">
+                <p>Predict crop production in tonnes based on various agricultural factors including weather conditions and area harvested.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Yield Estimation</h5>
+            </div>
+            <div class="card-body">
+                <p>Estimate crop yield in kg per hectare to help with agricultural planning and resource allocation.</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">Price Forecasting</h5>
+            </div>
+            <div class="card-body">
+                <p>Forecast crop prices in USD per tonne to make informed decisions about market timing and sales.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

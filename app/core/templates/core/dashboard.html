@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %} {% load django_bootstrap5 %} {% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<div class="card">
+			<div
+				class="card-header d-flex justify-content-between align-items-center"
+			>
+				<h4 class="mb-0">Your Predictions</h4>
+				<a href="{% url 'predict' %}" class="btn btn-success btn-sm"
+					>New Prediction</a
+				>
+			</div>
+			<div class="card-body">
+				{% if user_data %}
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr>
+								<th>Crop</th>
+								<th>Country</th>
+								<th>Year</th>
+								<th>Area (ha)</th>
+								<th>Predicted Production (tonnes)</th>
+								<th>Predicted Yield (kg/ha)</th>
+								<th>Predicted Price (USD/tonne)</th>
+								<th>Predicted Price (NGN/tonne)</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for data in user_data %}
+							<tr>
+								<td>{{ data.crop }}</td>
+								<td>{{ data.country }}</td>
+								<td>{{ data.year }}</td>
+								<td>{{ data.area_harvested_ha|floatformat:2 }}</td>
+								<td>{{ data.predicted_production|floatformat:2 }}</td>
+								<td>{{ data.predicted_yield|floatformat:2 }}</td>
+								<td class="usd-price">{{ data.predicted_price|floatformat:2 }}</td>
+								<td class="ngn-price"></td>
+								<td>{{ data.created_at|date:"Y-m-d" }}</td>
+							</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+					<script>
+	const exchangeRate = 1500; // 1 USD = 1500 NGN
+	const usdElements = document.querySelectorAll('.usd-price');
+	const ngnElements = document.querySelectorAll('.ngn-price');
+
+	usdElements.forEach((usdEl, index) => {
+		const usdValue = parseFloat(usdEl.textContent);
+		if (!isNaN(usdValue)) {
+			const ngnValue = usdValue * exchangeRate;
+			ngnElements[index].textContent = ngnValue.toFixed(2);
+		}
+	});
+</script>
+				</div>
+				{% else %}
+				<p>
+					No prediction data available.
+					<a href="{% url 'predict' %}">Make your first prediction</a>
+				</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

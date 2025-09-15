@@ -1,0 +1,136 @@
+{% extends 'core/base.html' %} {% load django_bootstrap5 %} {% block content %}
+<div class="row justify-content-center">
+	<div class="col-md-8">
+		<div class="card">
+			<div class="card-header bg-success text-white">
+				<h4 class="mb-0">Prediction Results</h4>
+			</div>
+			<div class="card-body">
+				<div class="alert alert-success">
+					<h5 class="alert-heading">Prediction Successful!</h5>
+					<p>Here are the results for your agricultural data prediction.</p>
+				</div>
+
+				<div class="row mb-4">
+					<div class="col-md-6">
+						<h5>Input Data</h5>
+						<ul class="list-group">
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center"
+							>
+								Crop
+								<span class="badge bg-primary rounded-pill"
+									>{{ results.input_data.crop }}</span
+								>
+							</li>
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center"
+							>
+								Country
+								<span class="badge bg-primary rounded-pill"
+									>{{ results.input_data.country }}</span
+								>
+							</li>
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center"
+							>
+								Year
+								<span class="badge bg-primary rounded-pill"
+									>{{ results.input_data.year }}</span
+								>
+							</li>
+							<li
+								class="list-group-item d-flex justify-content-between align-items-center"
+							>
+								Area (ha)
+								<span class="badge bg-primary rounded-pill"
+									>{{ results.input_data.area|floatformat:2 }}</span
+								>
+							</li>
+						</ul>
+					</div>
+					<div class="col-md-6">
+						<h5>Prediction Results</h5>
+						<div class="card">
+							<div class="card-body">
+								<div class="mb-3">
+									<label class="form-label">Predicted Production</label>
+									<div class="input-group">
+										<span class="input-group-text">tonnes</span>
+										<input
+											type="text"
+											class="form-control"
+											value="{{ results.production|floatformat:2 }}"
+											readonly
+										/>
+									</div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Predicted Yield</label>
+									<div class="input-group">
+										<span class="input-group-text">kg/ha</span>
+										<input
+											type="text"
+											class="form-control"
+											value="{{ results.yield|floatformat:2 }}"
+											readonly
+										/>
+									</div>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Predicted Price</label>
+									<div class="input-group">
+										<span class="input-group-text">USD/tonne</span>
+										<input
+											type="text"
+											class="form-control"
+											id="usdPrice"
+											value="{{ results.price|floatformat:2 }}"
+											readonly
+										/>
+									</div>
+                                    <br/>
+									<div class="input-group">
+										<span class="input-group-text">NGN/tonne</span>
+										<input
+											type="text"
+											class="form-control"
+											id="ngnPrice"
+											readonly
+										/>
+									</div>
+								</div>
+
+								<script>
+									const exchangeRate = 1500; // 1 USD = 1500 NGN
+									const usdInput = document.getElementById("usdPrice");
+									const ngnInput = document.getElementById("ngnPrice");
+
+									// Convert and display NGN value
+									const usdValue = parseFloat(usdInput.value);
+									if (!isNaN(usdValue)) {
+										const ngnValue = usdValue * exchangeRate;
+										ngnInput.value = ngnValue.toFixed(2);
+									}
+								</script>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+					<a
+						href="{% url 'dashboard' %}"
+						class="btn btn-outline-secondary me-md-2"
+					>
+						<i class="bi bi-arrow-left"></i> Back to Dashboard
+					</a>
+					<a href="{% url 'predict' %}" class="btn btn-success">
+						<i class="bi bi-plus-circle"></i> New Prediction
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

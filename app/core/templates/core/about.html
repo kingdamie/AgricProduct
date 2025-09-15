@@ -1,0 +1,45 @@
+{% extends 'core/base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">About AgriPredict</h4>
+            </div>
+            <div class="card-body">
+                <h5>Our Mission</h5>
+                <p>
+                    AgriPredict is designed to help farmers, agricultural businesses, and policymakers 
+                    make informed decisions by providing accurate predictions of crop production, yield, 
+                    and market prices based on various agricultural factors.
+                </p>
+                
+                <h5 class="mt-4">How It Works</h5>
+                <p>
+                    Our system uses advanced machine learning models trained on historical agricultural 
+                    data to predict key metrics. By inputting parameters like crop type, location, 
+                    weather conditions, and policy factors, users can get reliable forecasts to guide 
+                    their agricultural planning.
+                </p>
+                
+                <h5 class="mt-4">The Technology</h5>
+                <p>
+                    The prediction engine is built with Python and scikit-learn, using a Random Forest 
+                    regression model that has been trained on comprehensive agricultural datasets. The 
+                    web interface is developed with Django and Bootstrap for a responsive user experience.
+                </p>
+                
+                <div class="mt-4">
+                    <a href="{% url 'documentation' %}" class="btn btn-success">
+                        <i class="bi bi-book"></i> View Documentation
+                    </a>
+                    <a href="{% url 'home' %}" class="btn btn-outline-secondary ms-2">
+                        <i class="bi bi-house"></i> Back to Home
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends 'core/base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">User Profile</h4>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% bootstrap_form form %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Update Profile</button>
+                    </div>
+                </form>
+                
+                <hr>
+                
+                <h5 class="mt-4">Your Statistics</h5>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h6 class="card-title">Total Predictions</h6>
+                                <p class="card-text display-6">{{ user_stats.total_predictions }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h6 class="card-title">Favorite Crop</h6>
+                                <p class="card-text display-6">
+                                    {% if user_stats.favorite_crop %}
+                                        {{ user_stats.favorite_crop.crop }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <h6 class="card-title">Last Prediction</h6>
+                                <p class="card-text">
+                                    {% if user_stats.last_prediction %}
+                                        {{ user_stats.last_prediction.crop }}<br>
+                                        <small>{{ user_stats.last_prediction.created_at|date:"M d, Y" }}</small>
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{% url 'export_predictions' format='csv' %}" class="btn btn-outline-primary me-2">
+                        <i class="bi bi-download"></i> Export All Data (CSV)
+                    </a>
+                    <a href="{% url 'export_predictions' format='json' %}" class="btn btn-outline-primary">
+                        <i class="bi bi-download"></i> Export All Data (JSON)
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

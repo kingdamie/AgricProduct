@@ -1,0 +1,79 @@
+{% extends 'core/base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0">AgriPredict Documentation</h4>
+            </div>
+            <div class="card-body">
+                <h5>Getting Started</h5>
+                <p>
+                    To start using AgriPredict, create an account or log in if you already have one. 
+                    Once logged in, you can access the prediction tool from your dashboard.
+                </p>
+                
+                <h5 class="mt-4">Making Predictions</h5>
+                <p>
+                    To get a prediction:
+                </p>
+                <ol>
+                    <li>Navigate to the "New Prediction" page</li>
+                    <li>Fill in all required fields:
+                        <ul>
+                            <li><strong>Crop:</strong> The type of crop you're analyzing (e.g., Maize, Rice, Yam, etc.)</li>
+                            <li><strong>Country:</strong> Where the crop is grown</li>
+                            <li><strong>Year:</strong> The year of interest</li>
+                            <li><strong>Area Harvested:</strong> Total area in hectares</li>
+                            <li><strong>Rainfall:</strong> Average rainfall in mm</li>
+                            <li><strong>Temperature:</strong> Average temperature in °C</li>
+                            <li><strong>Policy Flag:</strong> Current agricultural policy  (e.g., Subsidy, Tariff, None)</li>
+                            <li><strong>Transport Cost:</strong> Cost to transport goods in USD (Cost to move the produce per tonne)</li>
+                            <li><strong>Demand Supply Gap:</strong> Difference between demand and supply</li>
+                        </ul>
+                    </li>
+                    <li>Click "Predict" to see your results</li>
+                </ol>
+                
+                <h5 class="mt-4">Understanding Results</h5>
+                <p>
+                    The prediction results will show three key metrics:
+                </p>
+                <ul>
+                    <li><strong>Predicted Production:</strong> Estimated total crop production in tonnes</li>
+                    <li><strong>Predicted Yield:</strong> Estimated yield per hectare in kg/ha</li>
+                    <li><strong>Predicted Price:</strong> Estimated market price in USD/tonne</li>
+                </ul>
+                
+                <h5 class="mt-4">Managing Your Data</h5>
+                <p>
+                    All your predictions are saved in your dashboard where you can:
+                </p>
+                <ul>
+                    <li>View historical predictions</li>
+                    <li>See detailed results</li>
+                    <li>Export data to CSV or JSON</li>
+                    <li>Delete outdated predictions</li>
+                </ul>
+                
+                <div class="alert alert-info mt-4">
+                    <h5 class="alert-heading">Note on Accuracy</h5>
+                    <p>
+                        Predictions are based on statistical models and historical data. 
+                        While we strive for accuracy, actual results may vary due to 
+                        unforeseen environmental or economic factors.
+                    </p>
+                </div>
+                
+                <div class="mt-4">
+                    <a href="{% url 'predict' %}" class="btn btn-success">
+                        <i class="bi bi-lightning"></i> Try the Predictor
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
